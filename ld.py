@@ -1,12 +1,29 @@
+#!/bin/python3
+#
+#   Authors:
+#       Eduardo Mendes - github.com/z4r4tu5tr4
+#
+#   Version:
+#       0.1 - (Feb/16)
+#
+#   License:
+#       GPL3+
+
+# Imports
 from re import compile
-from collections import defaultdict
 import matplotlib.pyplot as mpl
-from matplotlib import colors
-from random import choice
+from matplotlib import colors       #Only colors for the graph
+from random import choice           #Choose color
 
 regex = compile('\w+')
 index = {}
 
+#   assemble a dictionary containing
+#   the row and column of the selected
+#   words in text
+#
+#   ex: {word1 : [(line,column)],word2 : [(line,column),(line,column)]}
+#
 def dict_mount(arq, words):
     with open(arq) as arq:
         for n_line, line in enumerate(arq,1):
@@ -17,6 +34,9 @@ def dict_mount(arq, words):
                     location = (n_line, column)
                     index.setdefault(word,[]).append(location)
 
+#    assemble two lists containing the
+#    positions of the words chosen in
+#    the Cartesian plane and plots
 def mount_plot(word, switching = 0):
     x = []
     y = []
@@ -33,6 +53,8 @@ def mount_plot(word, switching = 0):
     except KeyError:
         print("Word does not exist in the file")
 
+#says the relationship between
+#the first two selected words
 def same_line(words):
     try:
         word_1 = set(a for a,b in index[words[0]])
@@ -53,6 +75,7 @@ def plot(phrase):
     mpl.title("Lexical dispersion")
     mpl.show()
 
+# Test for the GUI
 phrase = 'a gestão'.split()
 dict_mount('s_1000.txt', phrase)
 for x in sorted(phrase, key=len):
