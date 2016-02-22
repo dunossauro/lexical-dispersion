@@ -54,16 +54,20 @@ def mount_plot(word, switching = 0):
         print("Word does not exist in the file")
 
 #says the relationship between
-#the first two selected words
+#the words
 def same_line(words):
     try:
         word_1 = set(a for a,b in index[words[0]])
-        word_2 = set(a for a,b in index[words[1]])
-        inter = word_1.intersection(word_2)
+
+        for word in words[1:]:
+            word_set = set(a for a,b in index[word])
+            inter = word_1.intersection(word_set)
+
         amount = (("%s Occurrences on the same line")%(len(inter)))
         mpl.plot(0,0,label = amount)
+
     except KeyError:
-        pass
+        mpl.plot(0,0,label = "One of the chosen words do not exist in the file")
 
 def plot(phrase):
     if len(phrase) > 1:
@@ -76,7 +80,7 @@ def plot(phrase):
     mpl.show()
 
 # Test for the GUI
-phrase = 'a gestão'.split()
+phrase = 'a gestão o'.split()
 dict_mount('s_1000.txt', phrase)
 for x in sorted(phrase, key=len):
         mount_plot(x)
