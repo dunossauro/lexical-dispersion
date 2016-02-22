@@ -1,6 +1,6 @@
 # lexical-dispersion
 
-A simple tool to analyze language patterns in text files
+A simple graphical tool to analyze language patterns in text files
 
 example:
 
