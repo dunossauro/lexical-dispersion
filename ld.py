@@ -38,15 +38,15 @@ def dict_mount(arq, words):
 #    positions of the words chosen in
 #    the Cartesian plane and plots
 def mount_plot(word, switching = 0):
-    x = []
-    y = []
-    color = choice(list(colors.cnames.keys()))
+    lines = []
+    columns = []
+    color = choice(tuple(colors.cnames.keys()))
     try:
-        for a,b in index[word]:
-            x.append(a)
-            y.append(b)
+        for line,column in index[word]:
+            lines.append(line)
+            columns.append(column)
         word = ('%s (%s Occurrences)') % (word , len(index[word]))
-        mpl.plot(x,y, 'bo', color = color, label = word)
+        mpl.plot(lines,columns, 'bo', color = color, label = word)
         if switching == 1:
             mpl.plot(x,y, color = color)
 
@@ -57,10 +57,10 @@ def mount_plot(word, switching = 0):
 #the words
 def same_line(words):
     try:
-        word_1 = set(a for a,b in index[words[0]])
+        word_1 = {a for a,b in index[words[0]]}
 
         for word in words[1:]:
-            word_set = set(a for a,b in index[word])
+            word_set = {line for line,column in index[word]}
             inter = word_1.intersection(word_set)
 
         amount = (("%s Occurrences on the same line")%(len(inter)))
@@ -80,7 +80,7 @@ def plot(phrase):
     mpl.show()
 
 # Test for the GUI
-phrase = 'a gestão o'.split()
+phrase = 'a os as o'.split()
 dict_mount('s_1000.txt', phrase)
 for x in sorted(phrase, key=len):
         mount_plot(x)
